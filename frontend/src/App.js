@@ -22,27 +22,25 @@ const App = () => {
         });
         setName("");
         fetch();
-
     }
 
     const destroyTask = async (id) => {
-      await axios.delete(`http://localhost:3010/tasks/${id}`);
-      fetch();
+        await axios.delete(`http://localhost:3010/tasks/${id}`);
+        fetch();
     };
 
     useEffect(() => {
         fetch();
     }, []);
 
-    const toggleIsDone = (index) => {
-        // Reactのルールとしてstateの値をsetState以外で更新してはいけない
-        // そのため変数をコピーしておく
-        const tasksCopy = [...tasks];
+    const toggleIsDone = async (id, index) => {
         // 現在のタスクの完了状況を取得して、定数に代入
         // Taskの情報は配列の中からindexをもとに取得
-        const isDone = tasksCopy[index].isDone;
-        tasksCopy[index].isDone = !isDone;
-        setTasks(tasksCopy);
+        const isDone = tasks[index].is_done;
+        await axios.put(`http://localhost:3010/tasks/${id}`, {
+            is_done: !isDone,
+        });
+        fetch();
     };
 
     return (

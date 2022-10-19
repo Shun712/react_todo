@@ -9,12 +9,12 @@ const Task = (props) => {
                 colorScheme="blue"
                 size="lg"
                 onChange={() => {
-                    props.toggleIsDone(props.index);
-                }}
-            >
+                    props.toggleIsDone(props.id, props.index);
+                }}>
                 <Text>{props.name}</Text>
             </Checkbox>
-            <CloseIcon onClick={() => props.destroyTask(props.id)} />
+            <CloseIcon onClick={() =>
+                props.destroyTask(props.id)}/>
         </Flex>
     );
 };
