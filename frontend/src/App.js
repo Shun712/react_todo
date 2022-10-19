@@ -1,27 +1,21 @@
 import React, {useState, useEffect} from "react";
 import Task from './component/Task'
 import {Center, Box, CheckboxGroup, Text} from '@chakra-ui/react'
+import axios from "axios";
 
 const App = () => {
-    const initialTask = [
-        {
-            name: "買い物",
-            isDone: true,
-        },
-        {
-            name: "ランニング",
-            isDone: false,
-        },
-        {
-            name: "プログラミングの勉強",
-            isDone: false,
-        },
-    ];
-
     const [tasks, setTasks] = useState([]);
 
+    // asyncで定義した関数内でawaitを使うことで、Promiseオブジェクトの終了を待たせられる
+    // つまり、API通信の結果を待たせられる
+    // 非同期処理を同期的に行わせないとエラーになる
+    const fetch = async () => {
+        const res = await axios.get("http://localhost:3010/tasks");
+        setTasks(res.data);
+    };
+
     useEffect(() => {
-        setTasks(initialTask);
+        fetch();
     }, []);
 
     const toggleIsDone = (index) => {
